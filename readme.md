@@ -1,32 +1,37 @@
-[hr]
-[center][color=red][size=16pt][b]OUR IMPORTANT TOPICS v1.9[/b][/size][/color]
-[url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=4133]Link to Mod[/url]
-[/center]
-[hr]
+-------
 
-[color=blue][b][size=12pt][u]Introduction[/u][/size][/b][/color]
-This mod allows designated membergroups the ability to mark topics as important (or not), and to be able to view the [b]GLOBAL[/b] list of topics marked as important.
+# OUR IMPORTANT TOPICS v1.9
 
-Membergroups having the [b]Can Mark Topics As Important[/b] permission will be able to see a new menu under [b]Moderate[/b] called [b]Important Topics[/b], which will have a listing of the topics that were marked as important.  They will also see a new button called [b]Mark as Important[/b] for "unimportant" topics, or [b]Unmark as Important[/b] for "important" topics, in the moderator buttons area 
+[**By Dougiefresh**](http://www.simplemachines.org/community/index.php?action=profile;u=253913) -> [Link to Mod](http://custom.simplemachines.org/mods/index.php?mod=4133)
+
+-------
+
+## Introduction
+This mod allows designated membergroups the ability to mark topics as important (or not), and to be able to view the **GLOBAL** list of topics marked as important.
+
+Membergroups having the **Can Mark Topics As Important** permission will be able to see a new menu under **Moderate** called **Important Topics**, which will have a listing of the topics that were marked as important.  They will also see a new button called **Mark as Important** for "unimportant" topics, or **Unmark as Important** for "important" topics, in the moderator buttons area 
 
 In order to ensure compatibility with previous versions, permission to view topics marked as important is automatically implied if permission to mark topics as important is granted.  To do otherwise doesn't make sense to me....
 
-[color=blue][b][size=12pt][u]Admin Settings[/u][/size][/b][/color]
-Two new permissions are available in [b]Admin[/b] => [b]Members[/b] => [b]Permissions[/b] for each membergroup:
-o [b]Can Mark Topics As Important[/b]
-o [b]Can View Topics Marked As Important[/b]
+## Admin Settings
+Two new permissions are available in **Admin** => **Members** => **Permissions** for each membergroup:
 
-In [b]Admin[/b] => [b]Configuration[/b] => [b]Modification Settings[/b], there is a new setting:
-o [b]Where to place "Our Important Topics"[/b]
+- **Can Mark Topics As Important**
+- **Can View Topics Marked As Important**
 
-[color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
+In **Admin** => **Configuration** => **Modification Settings**, there is a new setting:
+
+- **Where to place "Our Important Topics"**
+
+## Compatibility Notes
 This mod was tested on SMF 2.0.13, but should work on SMF 2.0 and up, as well as SMF 2.1 Beta 2.  SMF 1.x is not and will not be supported.  
 
-[color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
-The changelog can be viewed at [url=http://www.xptsp.com/board/free-modifications/our-important-topics/?tab=1]XPtsp.com[/url].
+## Changelog
+The changelog can be viewed at [XPtsp.com](http://www.xptsp.com/board/free-modifications/our-important-topics/?tab=1).
 
-[color=blue][b][size=12pt][u]License[/u][/size][/b][/color]
+## License
 Copyright (c) 2016 - 2018, Douglas Orend
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
