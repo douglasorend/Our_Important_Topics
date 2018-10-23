@@ -1,3 +1,7 @@
+v1.3 - April 6th, 2017
+o Added temporary theme load hook to capture all top menu items.
+o Moved buffer hook to [b]Modification Settings[/b] code as temporary hook.
+
 v1.2 - March 28th, 2017
 o Added admin option to control where the "Our Important Topics" menu entry is located.
 o Added permission to view the important topic list.

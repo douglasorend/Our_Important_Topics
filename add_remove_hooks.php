@@ -21,12 +21,11 @@ if (SMF == 'SSI')
 // Define the hooks
 $hook_functions = array(
 	'integrate_pre_include' => '$sourcedir/Subs-ImportantTopics.php',
-	'integrate_menu_buttons' => 'ITM_menu_buttons',
+	'integrate_load_theme' => 'ITM_Load',
 	'integrate_mod_buttons' => 'ITM_mod_button',
 	'integrate_load_permissions' => 'ITM_permissions',
 	'integrate_actions' => 'ITM_actions',
 	'integrate_general_mod_settings' => 'ITM_settings',
-	'integrate_buffer' => 'ITM_Buffer',
 );
 
 // Adding or removing them?

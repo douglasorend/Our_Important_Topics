@@ -12,6 +12,11 @@ if (!defined('SMF'))
 /********************************************************************************
 * All of our hook functions that we need to pull this off:
 ********************************************************************************/
+function ITM_Load()
+{
+	add_integration_function('integrate_menu_buttons', 'ITM_menu_buttons', false);
+}	
+
 function ITM_menu_buttons(&$buttons)
 {
 	global $txt, $scripturl, $modSettings, $context;
@@ -66,6 +71,9 @@ function ITM_permissions(&$permissionGroups, &$permissionList, &$leftPermissionG
 function ITM_settings(&$config_vars)
 {
 	global $txt;
+
+	// Add a temporary hook and the configuration entry:
+	add_integration_function('integrate_buffer', 'ITM_Buffer', false);
 	$config_vars[] = array('select', 'itm_menu_home', array($txt['itm_menu_top_level']));
 }
 
@@ -73,10 +81,6 @@ function ITM_Buffer($buffer)
 {
 	global $txt, $context, $modSettings;
 
-	// Are we dealing with the Modification Settings page?  If not, return buffer:
-	if (!isset($_GET['action']) || $_GET['action'] != 'admin' || !isset($_GET['area']) || $_GET['area'] != 'modsettings' || !isset($_GET['sa']) || $_GET['sa'] != 'general')
-		return $buffer;
-		
 	// Let's alter the buffer so that we see the "top menu" categories:
 	$part1 = substr($buffer, 0, $pos1 = strpos($buffer, 'name="itm_menu_home"'));
 	$part3 = substr($buffer, $pos1);
