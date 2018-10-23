@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>Dougiefresh:ImportantTopics</id>
 <name>Important Topics</name>
-<version>1.0.2</version>
+<version>1.0.3</version>
 
 <file name="$sourcedir/Display.php">
 	<operation>

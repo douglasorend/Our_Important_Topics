@@ -1,3 +1,6 @@
+v1.0.3 - January 12th, 2017
+o Fixed session checking code for all actions.
+
 v1.0.2 - January 7th, 2017
 o Added some session checking to try and make sure nobody does anything sneaky....
 

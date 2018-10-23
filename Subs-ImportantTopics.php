@@ -18,7 +18,7 @@ function ITM_menu_buttons(&$buttons)
 	$buttons['moderate']['sub_buttons']['important'] = array(
 		'title' => $txt['itm_important_topics'],
 		'href' => $scripturl . '?action=moderate;area=important;' . $context['session_var'] . '=' . $context['session_id'],
-		'show' => allowedTo('can_mark_important'),
+		'show' => allowedTo('mark_important'),
 	);
 }
 
@@ -35,20 +35,20 @@ function ITM_moderator(&$buttons)
 function ITM_mod_button(&$buttons)
 {
 	global $scripturl, $context, $topicinfo;
-	$context['can_mark_important'] = allowedTo('can_mark_important');
+	$context['mark_important'] = allowedTo('mark_important');
 	if (empty($topicinfo['important']))
-		$buttons['important'] = array('test' => 'can_mark_important', 'text' => 'itm_mark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=mark;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
+		$buttons['important'] = array('test' => 'mark_important', 'text' => 'itm_mark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=mark;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
 	else
-		$buttons['important'] = array('test' => 'can_mark_important', 'text' => 'itm_unmark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=clear;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
+		$buttons['important'] = array('test' => 'mark_important', 'text' => 'itm_unmark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=clear;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
 }
 
 function ITM_permissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
 {
 	global $context;
-	$permissionList['membergroup']['can_mark_important'] = array(false, 'maintenance', 'moderate_general');
-	if (!allowedTo('can_mark_important'))
-		$context['illegal_permissions'][] = 'can_mark_important';
-	$context['non_guest_permissions'][] = 'can_mark_important';
+	$permissionList['membergroup']['mark_important'] = array(false, 'maintenance', 'moderate_general');
+	if (!allowedTo('mark_important'))
+		$context['illegal_permissions'][] = 'mark_important';
+	$context['non_guest_permissions'][] = 'mark_important';
 }
 
 /********************************************************************************
@@ -59,26 +59,28 @@ function ITM_Important_Topics()
 	global $context, $txt, $scripturl, $modSettings, $smcFunc, $sourcedir;
 
 	// Set up for listing the "important" topics:
-	checkSession('get');
-	isAllowedTo('can_mark_important');
+	isAllowedTo('mark_important');
 	$context['page_title' ] = $txt['itm_important_topics'];
 	$context['sub_template'] = 'important_topics';
 
 	// Let's check the URL parameters passed before going further:
 	if (isset($_GET['sa']) && $_GET['sa'] == 'mark' && isset($_GET['topic']))
 	{
+		checkSession('get');
 		$_GET['topic'] = (int) $_GET['topic'];
 		ITM_Mark_Topic($_GET['topic'], true);
 		redirectExit('topic=' . $_GET['topic'] . '.0');
 	}
 	elseif (isset($_GET['sa']) && $_GET['sa'] == 'clear' && isset($_GET['topic']))
 	{
+		checkSession('get');
 		$_GET['topic'] = (int) $_GET['topic'];
 		ITM_Mark_Topic($_GET['topic'], false);
 		redirectExit('topic=' . $_GET['topic'] . '.0');
 	}
 	elseif (isset($_GET['sa']) && $_GET['sa'] == 'remove' && isset($_POST['remove']))
 	{
+		checkSession('post');
 		ITM_Mark_Topic($_POST['remove'], false);
 		redirectExit('action=moderate;area=important');
 	}
@@ -88,7 +90,7 @@ function ITM_Important_Topics()
 		'id' => 'important_topics',
 		'title' => $txt['itm_important_topics'],
 		'items_per_page' => $modSettings['defaultMaxMessages'],
-		'base_href' => $scripturl . '?action=moderate;area=important',
+		'base_href' => $scripturl . '?action=moderate;area=important' . ';' . $context['session_var'] . '=' . $context['session_id'],
 		'default_sort_col' => 'lastpost',
 		'no_items_label' => $txt['itm_no_important_topics'],
 		'get_items' => array(
@@ -253,15 +255,14 @@ function ITM_Mark_Topic($topics, $important = 0)
 {
 	global $smcFunc;
 	checkSession('get');
-	isAllowedTo('can_mark_important');
+	isAllowedTo('mark_important');
 	
 	// Let's create an array with our sanitized topic list:
 	$topic_list = array();
 	if (!is_array($topics))
 		$topic_list = array((int) $topics);
 	else
-		foreach ($topics as $topic => $garbage)
-			$topic_list[] = (int) $topic;
+		$topic_list = array_keys($topics);
 			
 	// Update all of the topics with their new "important" status:
 	if (!empty($topic_list))
