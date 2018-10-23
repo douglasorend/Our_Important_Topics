@@ -1,3 +1,6 @@
+v1.4 - April 7th, 2017
+o Included Portuguese translation provided by [url=http://www.simplemachines.org/community/index.php?action=profile;u=98294]Portugal[/url].  Thanks, Portugal!
+
 v1.3 - April 6th, 2017
 o Added temporary theme load hook to capture all top menu items.
 o Moved buffer hook to [b]Modification Settings[/b] code as temporary hook.

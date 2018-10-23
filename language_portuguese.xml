@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:ImportantTopics</id>
+<name>Our Important Topics</name>
+<version>1.3</version>
+
+<file name="$languagedir/index.portuguese-pt.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['itm_important_topics'] = 'Tópicos importantes';
+$txt['itm_no_important_topics'] = 'Sem tópicos importantes ainda...';
+$txt['itm_unmark_as_important'] = 'Remover dos tópicos importantes';
+$txt['itm_unmark_confirm'] = 'Tem a certeza que pretende remover os tópicos seleccionados dos tópicos importantes?';
+$txt['itm_mark_as_important'] = 'Marcar como importante';
+$txt['itm_menu_top_level'] = 'Menu superior';
+$txt['itm_menu_under_level'] = 'Por baixo &quot;%s&quot;';
+$txt['itm_menu_home'] = 'Onde colocar &quot;' . $txt['itm_important_topics'] . '&quot;';
+$txt['permissionname_mark_important'] = 'Pode marcar tópicos como importantes';
+$txt['permissionname_view_important'] = 'Pode ver tópicos assinalados como importantes';
+]]></add>
+	</operation>
+</file>
+</modification>
