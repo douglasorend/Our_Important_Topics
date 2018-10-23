@@ -1,3 +1,6 @@
+v1.7 - March 30th, 2018
+o Added Turkish translation, courtsey of [url=https://www.simplemachines.org/community/index.php?action=profile;u=373904]Snrj[/url]!
+
 v1.6 - January 9th, 2018
 o Added Spanish Latin translation, courtsey of [url=https://www.simplemachines.org/community/index.php?action=profile;u=322597]Rock Lee[/url]!
 o Added [b]ssi_getRandomImportantTopic[/b] function to [b]Subs-ImportantTopics.php[/b].

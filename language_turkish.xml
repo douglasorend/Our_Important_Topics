@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:ImportantTopics</id>
+<name>Our Important Topics</name>
+<version>1.7</version>
+
+<file name="$languagedir/index.turkish.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['itm_important_topics'] = 'Önemli Konular';
+$txt['itm_no_important_topics'] = 'Henüz önemli bir konu yok.';
+$txt['itm_unmark_as_important'] = 'Önemli olarak işaretini kaldır';
+$txt['itm_unmark_confirm'] = 'Seçilen konuları önemli konular olarak işaretlemek istediğinizden emin misiniz?';
+$txt['itm_mark_as_important'] = 'Önemli Olarak İşaretle';
+$txt['itm_menu_top_level'] = 'Üst Menü';
+$txt['itm_menu_under_level'] = 'Altında &quot;%s&quot;';
+$txt['itm_menu_home'] = 'Nerede Gözüksün &quot;' . $txt['itm_important_topics'] . '&quot;';
+$txt['permissionname_mark_important'] = 'Konuları önemli olarak işaretleyebilir';
+$txt['permissionname_view_important'] = 'Önemli olarak işaretlenen konuları görüntüleyebilir';
+]]></add>
+	</operation>
+</file>
+<file name="$languagedir/index.turkish-utf8.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['itm_important_topics'] = 'Önemli Konular';
+$txt['itm_no_important_topics'] = 'Henüz önemli bir konu yok.';
+$txt['itm_unmark_as_important'] = 'Önemli olarak işaretini kaldır';
+$txt['itm_unmark_confirm'] = 'Seçilen konuları önemli konular olarak işaretlemek istediğinizden emin misiniz?';
+$txt['itm_mark_as_important'] = 'Önemli Olarak İşaretle';
+$txt['itm_menu_top_level'] = 'Üst Menü';
+$txt['itm_menu_under_level'] = 'Altında &quot;%s&quot;';
+$txt['itm_menu_home'] = 'Nerede Gözüksün &quot;' . $txt['itm_important_topics'] . '&quot;';
+$txt['permissionname_mark_important'] = 'Konuları önemli olarak işaretleyebilir';
+$txt['permissionname_view_important'] = 'Önemli olarak işaretlenen konuları görüntüleyebilir';
+]]></add>
+	</operation>
+</file>
+</modification>
