@@ -14,10 +14,10 @@ if (!defined('SMF'))
 ********************************************************************************/
 function ITM_menu_buttons(&$buttons)
 {
-	global $txt, $scripturl;
+	global $txt, $scripturl, $context;
 	$buttons['moderate']['sub_buttons']['important'] = array(
 		'title' => $txt['itm_important_topics'],
-		'href' => $scripturl . '?action=moderate;area=important',
+		'href' => $scripturl . '?action=moderate;area=important;' . $context['session_var'] . '=' . $context['session_id'],
 		'show' => allowedTo('can_mark_important'),
 	);
 }
@@ -37,9 +37,9 @@ function ITM_mod_button(&$buttons)
 	global $scripturl, $context, $topicinfo;
 	$context['can_mark_important'] = allowedTo('can_mark_important');
 	if (empty($topicinfo['important']))
-		$buttons['important'] = array('test' => 'can_mark_important', 'text' => 'itm_mark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=mark;topic=' . $context['current_topic']);
+		$buttons['important'] = array('test' => 'can_mark_important', 'text' => 'itm_mark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=mark;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
 	else
-		$buttons['important'] = array('test' => 'can_mark_important', 'text' => 'itm_unmark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=clear;topic=' . $context['current_topic']);
+		$buttons['important'] = array('test' => 'can_mark_important', 'text' => 'itm_unmark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=clear;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
 }
 
 function ITM_permissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
@@ -59,6 +59,7 @@ function ITM_Important_Topics()
 	global $context, $txt, $scripturl, $modSettings, $smcFunc, $sourcedir;
 
 	// Set up for listing the "important" topics:
+	checkSession('get');
 	isAllowedTo('can_mark_important');
 	$context['page_title' ] = $txt['itm_important_topics'];
 	$context['sub_template'] = 'important_topics';
@@ -178,7 +179,7 @@ function ITM_Important_Topics()
 			),
 		),
 		'form' => array(
-			'href' => $scripturl . '?action=moderate;area=important;sa=remove',
+			'href' => $scripturl . '?action=moderate;area=important;sa=remove;' . $context['session_var'] . '=' . $context['session_id'],
 			'include_sort' => true,
 			'include_start' => true,
 		),
@@ -251,6 +252,7 @@ function ITM_Get_Topics($start, $items_per_page, $sort)
 function ITM_Mark_Topic($topics, $important = 0)
 {
 	global $smcFunc;
+	checkSession('get');
 	isAllowedTo('can_mark_important');
 	
 	// Let's create an array with our sanitized topic list:
