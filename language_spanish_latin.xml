@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:ImportantTopics</id>
+<name>Our Important Topics</name>
+<version>1.6</version>
+
+<file name="$languagedir/index.spanish_latin.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['itm_important_topics'] = 'Nuestros temas importantes';
+$txt['itm_no_important_topics'] = 'No hay temas importantes todav&iacute;a ...';
+$txt['itm_unmark_as_important'] = 'Desmarcar como importante';
+$txt['itm_unmark_confirm'] = '&iquest;Seguro que quieres desmarcar el/los tema(s) seleccionado(s) como tema(s) importante(s)?';
+$txt['itm_mark_as_important'] = 'Marcar como importante';
+$txt['itm_menu_top_level'] = 'Menu principal';
+$txt['itm_menu_under_level'] = 'Debajo &quot;%s&quot;';
+$txt['itm_menu_home'] = 'Donde colocar &quot;' . $txt['itm_important_topics'] . '&quot;';
+$txt['permissionname_mark_important'] = 'Puede marcar temas como importantes';
+$txt['permissionname_view_important'] = 'Puede ver temas marcados como importantes';
+]]></add>
+	</operation>
+</file>
+
+<file name="$languagedir/index.spanish_latin-utf8.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['itm_important_topics'] = 'Nuestros temas importantes';
+$txt['itm_no_important_topics'] = 'No hay temas importantes todavía ...';
+$txt['itm_unmark_as_important'] = 'Desmarcar como importante';
+$txt['itm_unmark_confirm'] = '&iquest;Seguro que quieres desmarcar el/los tema(s) seleccionado(s) como tema(s) importante(s)?';
+$txt['itm_mark_as_important'] = 'Marcar como importante';
+$txt['itm_menu_top_level'] = 'Menu principal';
+$txt['itm_menu_under_level'] = 'Debajo &quot;%s&quot;';
+$txt['itm_menu_home'] = 'Donde colocar &quot;' . $txt['itm_important_topics'] . '&quot;';
+$txt['permissionname_mark_important'] = 'Puede marcar temas como importantes';
+$txt['permissionname_view_important'] = 'Puede ver temas marcados como importantes';
+]]></add>
+	</operation>
+</file>
+</modification>

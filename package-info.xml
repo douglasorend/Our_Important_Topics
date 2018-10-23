@@ -4,7 +4,7 @@
 	<id>Dougiefresh:ImportantTopics</id>
 	<name>Our Important Topics</name>
 	<type>modification</type>
-	<version>1.5</version>
+	<version>1.6</version>
 
 	<install for="2.0 - 2.0.99, 2.1 Beta 2">
 		<readme type="file" parsebbc="true">readme.txt</readme>
@@ -13,6 +13,7 @@
 		<modification>install.xml</modification>
 		<modification>language_english.xml</modification>
 		<modification>language_portuguese.xml</modification>
+		<modification>language_spanish_latin.xml</modification>
 		<require-file name="Subs-ImportantTopics.php" destination="$sourcedir" />
 	</install>
 	<uninstall for="2.0 - 2.0.99, 2.1 Beta 2">
@@ -20,6 +21,7 @@
 		<modification reverse="true">install.xml</modification>
 		<modification reverse="true">language_english.xml</modification>
 		<modification reverse="true">language_portuguese.xml</modification>
+		<modification reverse="true">language_spanish_latin.xml</modification>
 		<remove-file name="$sourcedir/Subs-ImportantTopics.php" />
 	</uninstall>
 </package-info>

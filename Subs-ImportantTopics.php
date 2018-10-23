@@ -342,4 +342,162 @@ function template_important_topics()
 	template_show_list('important_topics');
 }
 
+/********************************************************************************
+* Our "Random Important Topic" SSI function:
+********************************************************************************/
+function ssi_getRandomImportantTopic($board = null, $length = null, $output_method = 'echo')
+{
+	global $scripturl, $db_prefix, $txt, $settings, $modSettings, $context;
+	global $smcFunc;
+
+	loadLanguage('Stats');
+
+	if ($board !== null)
+		$board = (int) $board;
+	elseif (isset($_GET['board']))
+		$board = (int) $_GET['board'];
+
+	if ($length === null)
+		$length = isset($_GET['length']) ? (int) $_GET['length'] : 0;
+	else
+		$length = (int) $length;
+
+	// Make sure guests can see this board.
+	$request = $smcFunc['db_query']('', '
+		SELECT id_board
+		FROM {db_prefix}boards
+		WHERE ' . ($board === null ? '' : 'id_board = {int:current_board}
+			AND ') . 'FIND_IN_SET(-1, member_groups) != 0
+		LIMIT 1',
+		array(
+			'current_board' => $board,
+		)
+	);
+	if ($smcFunc['db_num_rows']($request) == 0)
+	{
+		if ($output_method == 'echo')
+			die($txt['ssi_no_guests']);
+		else
+			return array();
+	}
+	list ($board) = $smcFunc['db_fetch_row']($request);
+	$smcFunc['db_free_result']($request);
+
+	// Load the message icons - the usual suspects.
+	$stable_icons = array('xx', 'thumbup', 'thumbdown', 'exclamation', 'question', 'lamp', 'smiley', 'angry', 'cheesy', 'grin', 'sad', 'wink', 'moved', 'recycled', 'wireless');
+	$icon_sources = array();
+	foreach ($stable_icons as $icon)
+		$icon_sources[$icon] = 'images_url';
+
+	// Find the post ids.
+	$request = $smcFunc['db_query']('', '
+		SELECT t.id_first_msg
+		FROM {db_prefix}topics as t
+		LEFT JOIN {db_prefix}boards as b ON (b.id_board = t.id_board)
+		WHERE t.id_board = {int:current_board}' . ($modSettings['postmod_active'] ? '
+			AND t.approved = {int:is_approved}' : '') . '
+			AND t.important = {int:is_important}
+			AND {query_see_board}
+		ORDER BY t.id_first_msg DESC',
+		array(
+			'current_board' => $board,
+			'is_important' => 1,
+			'is_approved' => 1,
+		)
+	);
+	$posts = array();
+	while ($row = $smcFunc['db_fetch_assoc']($request))
+		$posts[] = $row['id_first_msg'];
+	$smcFunc['db_free_result']($request);
+
+	if (empty($posts))
+		return array();
+
+	// Find the posts.
+	$request = $smcFunc['db_query']('', '
+		SELECT
+			m.icon, m.subject, m.body, IFNULL(mem.real_name, m.poster_name) AS poster_name, m.poster_time,
+			t.num_replies, t.id_topic, m.id_member, m.smileys_enabled, m.id_msg, t.locked, t.id_last_msg
+		FROM {db_prefix}topics AS t
+			INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_first_msg)
+			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
+		WHERE t.id_first_msg IN ({array_int:post_list})
+		ORDER BY t.id_first_msg DESC
+		LIMIT ' . count($posts),
+		array(
+			'post_list' => $posts,
+		)
+	);
+	$return = array();
+	while ($row = $smcFunc['db_fetch_assoc']($request))
+	{
+		// If we want to limit the length of the post.
+		if (!empty($length) && $smcFunc['strlen']($row['body']) > $length)
+		{
+			$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
+
+			// The first space or line break. (<br />, etc.)
+			$cutoff = max(strrpos($row['body'], ' '), strrpos($row['body'], '<'));
+
+			if ($cutoff !== false)
+				$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
+			$row['body'] .= '...';
+		}
+
+		$row['body'] = parse_bbc($row['body'], $row['smileys_enabled'], $row['id_msg']);
+
+		// Check that this message icon is there...
+		if (empty($modSettings['messageIconChecks_disable']) && !isset($icon_sources[$row['icon']]))
+			$icon_sources[$row['icon']] = file_exists($settings['theme_dir'] . '/images/post/' . $row['icon'] . '.gif') ? 'images_url' : 'default_images_url';
+
+		censorText($row['subject']);
+		censorText($row['body']);
+
+		$return[] = array(
+			'id' => $row['id_topic'],
+			'message_id' => $row['id_msg'],
+			'icon' => '<img src="' . $settings[$icon_sources[$row['icon']]] . '/post/' . $row['icon'] . '.gif" alt="' . $row['icon'] . '" />',
+			'subject' => $row['subject'],
+			'time' => timeformat($row['poster_time']),
+			'timestamp' => forum_time(true, $row['poster_time']),
+			'body' => $row['body'],
+			'href' => $scripturl . '?topic=' . $row['id_topic'] . '.0',
+			'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.0">' . $row['num_replies'] . ' ' . ($row['num_replies'] == 1 ? $txt['ssi_comment'] : $txt['ssi_comments']) . '</a>',
+			'replies' => $row['num_replies'],
+			'comment_href' => !empty($row['locked']) ? '' : $scripturl . '?action=post;topic=' . $row['id_topic'] . '.' . $row['num_replies'] . ';last_msg=' . $row['id_last_msg'],
+			'comment_link' => !empty($row['locked']) ? '' : '<a href="' . $scripturl . '?action=post;topic=' . $row['id_topic'] . '.' . $row['num_replies'] . ';last_msg=' . $row['id_last_msg'] . '">' . $txt['ssi_write_comment'] . '</a>',
+			'new_comment' => !empty($row['locked']) ? '' : '<a href="' . $scripturl . '?action=post;topic=' . $row['id_topic'] . '.' . $row['num_replies'] . '">' . $txt['ssi_write_comment'] . '</a>',
+			'poster' => array(
+				'id' => $row['id_member'],
+				'name' => $row['poster_name'],
+				'href' => !empty($row['id_member']) ? $scripturl . '?action=profile;u=' . $row['id_member'] : '',
+				'link' => !empty($row['id_member']) ? '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['poster_name'] . '</a>' : $row['poster_name']
+			),
+			'locked' => !empty($row['locked']),
+			'is_last' => false
+		);
+	}
+	$smcFunc['db_free_result']($request);
+
+	if (empty($return))
+		return $return;
+
+	$func = function_exists('random_int') ? 'random_int' : 'rand';
+	$return = $return[ $func(0, count($return) - 1) ];
+
+	if ($output_method != 'echo')
+		return $return;
+
+	echo '
+			<div class="news_item">
+				<h3 class="news_header">
+					', $return['icon'], '
+					<a href="', $return['href'], '">', $return['subject'], '</a>
+				</h3>
+				<div class="news_timestamp">', $return['time'], ' ', $txt['by'], ' ', $return['poster']['link'], '</div>
+				<div class="news_body" style="padding: 2ex 0;">', $return['body'], '</div>
+				', $return['link'], $return['locked'] ? '' : ' | ' . $return['comment_link'], '
+			</div>';
+}
+
 ?>
