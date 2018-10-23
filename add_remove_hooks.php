@@ -24,6 +24,7 @@ $hook_functions = array(
 	'integrate_menu_buttons' => 'ITM_menu_buttons',
 	'integrate_mod_buttons' => 'ITM_mod_button',
 	'integrate_load_permissions' => 'ITM_permissions',
+	'integrate_actions' => 'ITM_actions',
 );
 
 // Adding or removing them?

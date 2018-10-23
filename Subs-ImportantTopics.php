@@ -15,21 +15,16 @@ if (!defined('SMF'))
 function ITM_menu_buttons(&$buttons)
 {
 	global $txt, $scripturl, $context;
-	$buttons['moderate']['sub_buttons']['important'] = array(
+	$buttons['home']['sub_buttons']['important'] = array(
 		'title' => $txt['itm_important_topics'],
-		'href' => $scripturl . '?action=moderate;area=important;' . $context['session_var'] . '=' . $context['session_id'],
+		'href' => $scripturl . '?action=important;' . $context['session_var'] . '=' . $context['session_id'],
 		'show' => allowedTo('mark_important'),
 	);
 }
 
-function ITM_moderator(&$buttons)
+function ITM_actions(&$actions)
 {
-	global $txt;
-	$buttons['posts']['areas']['important'] = array(
-		'label' => $txt['itm_important_topics'],
-		'file' => 'Subs-ImportantTopics.php',
-		'function' => 'ITM_Important_Topics',
-	);
+	$actions['important'] = array('Subs-ImportantTopics.php', 'ITM_Important_Topics');
 }
 
 function ITM_mod_button(&$buttons)
@@ -37,9 +32,9 @@ function ITM_mod_button(&$buttons)
 	global $scripturl, $context, $topicinfo;
 	$context['mark_important'] = allowedTo('mark_important');
 	if (empty($topicinfo['important']))
-		$buttons['important'] = array('test' => 'mark_important', 'text' => 'itm_mark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=mark;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
+		$buttons['important'] = array('test' => 'mark_important', 'text' => 'itm_mark_as_important', 'lang' => true, 'url' => $scripturl . '?action=important;sa=mark;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
 	else
-		$buttons['important'] = array('test' => 'mark_important', 'text' => 'itm_unmark_as_important', 'lang' => true, 'url' => $scripturl . '?action=moderate;area=important;sa=clear;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
+		$buttons['important'] = array('test' => 'mark_important', 'text' => 'itm_unmark_as_important', 'lang' => true, 'url' => $scripturl . '?action=important;sa=clear;topic=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']);
 }
 
 function ITM_permissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
@@ -82,7 +77,7 @@ function ITM_Important_Topics()
 	{
 		checkSession('post');
 		ITM_Mark_Topic($_POST['remove'], false);
-		redirectExit('action=moderate;area=important');
+		redirectExit('action=important');
 	}
 
 	// Set the options for the list component.
@@ -90,7 +85,7 @@ function ITM_Important_Topics()
 		'id' => 'important_topics',
 		'title' => $txt['itm_important_topics'],
 		'items_per_page' => $modSettings['defaultMaxMessages'],
-		'base_href' => $scripturl . '?action=moderate;area=important' . ';' . $context['session_var'] . '=' . $context['session_id'],
+		'base_href' => $scripturl . '?action=important' . ';' . $context['session_var'] . '=' . $context['session_id'],
 		'default_sort_col' => 'lastpost',
 		'no_items_label' => $txt['itm_no_important_topics'],
 		'get_items' => array(
@@ -109,7 +104,7 @@ function ITM_Important_Topics()
 						global $scripturl, $txt;
 						$board = \'<strong><a href="\' . $scripturl . \'?board=\' . $rowData["id_board"] . \'.0">\' . $rowData[\'board_name\'] . \'</a></strong>\';
 						$topic = \'<strong><a href="\' . $scripturl . \'?topic=\' . $rowData["id_topic"] . \'.0">\' . $rowData[\'first_subject\'] . \'</a></strong>\';
-						$user = \'<strong><a href="\' . $scripturl . \'?action=profile;user=\' . $rowData["first_member"] . \'">\' . $rowData[\'first_poster\'] . \'</a></strong>\';
+						$user = \'<strong><a href="\' . $scripturl . \'?action=home;user=\' . $rowData["first_member"] . \'">\' . $rowData[\'first_poster\'] . \'</a></strong>\';
 						return $board . " \\\\ " . $topic . \'<div class="smalltext">\' . $txt["started_by"] . " " . $user . \'</div>\';
 					'),
 				),
@@ -155,7 +150,7 @@ function ITM_Important_Topics()
 				'data' => array(
 					'function' => create_function('$rowData', '
 						global $scripturl, $txt;
-						$user = \'<strong><a href=\"\' . $scripturl . \'?action=profile;user=\' . $rowData["last_member"] . \'">\' . $rowData[\'last_poster\'] . \'</a></strong>\';
+						$user = \'<strong><a href=\"\' . $scripturl . \'?action=home;user=\' . $rowData["last_member"] . \'">\' . $rowData[\'last_poster\'] . \'</a></strong>\';
 						return "<strong>" . $txt["last_post"] . "</strong> " . $txt["by"] . " " . $user . \'<div class="smalltext">\' . timeformat($rowData[\'last_posted\']);
 					'),
 					'style' => 'width: 30%',
@@ -181,7 +176,7 @@ function ITM_Important_Topics()
 			),
 		),
 		'form' => array(
-			'href' => $scripturl . '?action=moderate;area=important;sa=remove;' . $context['session_var'] . '=' . $context['session_id'],
+			'href' => $scripturl . '?action=important;sa=remove;' . $context['session_var'] . '=' . $context['session_id'],
 			'include_sort' => true,
 			'include_start' => true,
 		),

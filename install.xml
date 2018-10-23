@@ -2,23 +2,13 @@
 <!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>Dougiefresh:ImportantTopics</id>
-<name>Important Topics</name>
-<version>1.0.3</version>
+<name>Our Important Topics</name>
+<version>1.1</version>
 
 <file name="$sourcedir/Display.php">
 	<operation>
 		<search position="before"><![CDATA[t.num_replies, t.num_views, t.locked, ms.subject, t.is_sticky, t.id_poll,]]></search>
 		<add><![CDATA[ t.important,]]></add>
-	</operation>
-</file>
-<file name="$sourcedir/ModerationCenter.php">
-	<operation>
-		<search position="after"><![CDATA[// I don't know where we're going - I don't know where we've been...]]></search>
-		<add><![CDATA[// START: Important Topics mod insert
-	ITM_moderator($moderation_areas);
-	// END: Important Topics mod insert
-	
-	]]></add>
 	</operation>
 </file>
 </modification>

@@ -1,11 +1,11 @@
 [hr]
-[center][color=red][size=16pt][b]IMPORTANT TOPICS v1.0.3[/b][/size][/color]
+[center][color=red][size=16pt][b]OUR IMPORTANT TOPICS v1.1[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=4133]Link to Mod[/url]
 [/center]
 [hr]
 
 [color=blue][b][size=12pt][u]Introduction[/u][/size][/b][/color]
-This mod allows designated membergroups the ability to mark topics as important (or not), and to be able to view the list of topics marked as important.
+This mod allows designated membergroups the ability to mark topics as important (or not), and to be able to view the [b]GLOBAL[/b] list of topics marked as important.
 
 Membergroups having the [b]Can Mark Topics As Important[/b] permission will be able to see a new menu under [b]Moderate[/b] called [b]Important Topics[/b], which will have a listing of the topics that were marked as important.  They will also see a new button called [b]Mark as Important[/b] for "unimportant" topics, or [b]Unmark as Important[/b] for "important" topics, in the moderator buttons area 
 
@@ -13,13 +13,13 @@ Membergroups having the [b]Can Mark Topics As Important[/b] permission will be a
 A new permission [b]Can Mark Topics As Important[/b] is available for each membergroup.
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
-This mod was tested on SMF 2.0.12, but should work on SMF 2.0 and up.  SMF 1.x is not and will not be supported.  
+This mod was tested on SMF 2.0.13, but should work on SMF 2.0 and up, as well as SMF 2.1 Beta 2.  SMF 1.x is not and will not be supported.  
 
 [color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
 The changelog has been removed and can be seen at [url=http://www.xptsp.com/board/index.php?topic=735.msg1190#msg1190]XPtsp.com[/url].
 
 [color=blue][b][size=12pt][u]License[/u][/size][/b][/color]
-Copyright (c) 2016, Douglas Orend
+Copyright (c) 2016 - 2017, Douglas Orend
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

@@ -1,3 +1,10 @@
+v1.1 - January 30th, 2017
+o Added support for SMF 2.1 Beta 2.
+o Fixed missing permission name error.
+o Moved "Important Topics" item from "Moderate" to the "Home" menu.
+o Removed "Important Topics" from moderation menu.
+o Renamed "Important Topics" to "Our Important Topics".
+
 v1.0.3 - January 12th, 2017
 o Fixed session checking code for all actions.
 

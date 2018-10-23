@@ -2,21 +2,21 @@
 <!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
 	<id>Dougiefresh:ImportantTopics</id>
-	<name>Important Topics</name>
-	<version>1.0.3</version>
+	<name>Our Important Topics</name>
 	<type>modification</type>
+	<version>1.1</version>
 
-	<install for="2.0 - 2.0.99">
+	<install for="2.0 - 2.0.99, 2.1 Beta 2">
 		<readme type="file" parsebbc="true">readme.txt</readme>
 		<code>add_remove_hooks.php</code>
 		<database>db_install.php</database>
-		<modification>install_20x.xml</modification>
+		<modification>install.xml</modification>
 		<modification>language_english.xml</modification>
 		<require-file name="Subs-ImportantTopics.php" destination="$sourcedir" />
 	</install>
-	<uninstall for="2.0 - 2.0.99">
+	<uninstall for="2.0 - 2.0.99, 2.1 Beta 2">
 		<code>add_remove_hooks.php</code>
-		<modification reverse="true">install_20x.xml</modification>
+		<modification reverse="true">install.xml</modification>
 		<modification reverse="true">language_english.xml</modification>
 		<remove-file name="$sourcedir/Subs-ImportantTopics.php" />
 	</uninstall>
