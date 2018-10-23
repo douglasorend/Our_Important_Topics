@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>Dougiefresh:ImportantTopics</id>
 <name>Our Important Topics</name>
-<version>1.1</version>
+<version>1.2</version>
 
 <file name="$languagedir/index.english.php">
 	<operation>
@@ -14,7 +14,11 @@ $txt['itm_no_important_topics'] = 'No important topics yet...';
 $txt['itm_unmark_as_important'] = 'Unmark as Important';
 $txt['itm_unmark_confirm'] = 'Are you sure you want to unmark the selected topic(s) as important topics?';
 $txt['itm_mark_as_important'] = 'Mark as Important';
+$txt['itm_menu_top_level'] = 'Top Menu';
+$txt['itm_menu_under_level'] = 'Under &quot;%s&quot;';
+$txt['itm_menu_home'] = 'Where to place &quot;' . $txt['itm_important_topics'] . '&quot;';
 $txt['permissionname_mark_important'] = 'Can mark topics as important';
+$txt['permissionname_view_important'] = 'Can view topics marked as important';
 ]]></add>
 	</operation>
 </file>

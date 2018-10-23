@@ -14,8 +14,21 @@ if (!defined('SMF'))
 ********************************************************************************/
 function ITM_menu_buttons(&$buttons)
 {
-	global $txt, $scripturl, $context;
-	$buttons['home']['sub_buttons']['important'] = array(
+	global $txt, $scripturl, $modSettings, $context;
+	
+	// Save the top menu area names into a $context variable:
+	$context['ITM_labels'] = array();
+	foreach ($buttons as $id => $area)
+		$context['ITM_labels'][$id] = sprintf($txt['itm_menu_under_level'], $area['title']);
+
+	// Decide where we are going to put this bugger:
+	if (!empty($modSettings['itm_menu_home']) && isset($buttons[$modSettings['itm_menu_home']]))
+		$root = &$buttons[$modSettings['itm_menu_home']]['sub_buttons'];
+	else
+		$root = &$buttons;
+
+	// Place the "Our Import Topics" link at where we decided to put it:
+	$root['important'] = array(
 		'title' => $txt['itm_important_topics'],
 		'href' => $scripturl . '?action=important;' . $context['session_var'] . '=' . $context['session_id'],
 		'show' => allowedTo('mark_important'),
@@ -40,10 +53,47 @@ function ITM_mod_button(&$buttons)
 function ITM_permissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
 {
 	global $context;
-	$permissionList['membergroup']['mark_important'] = array(false, 'maintenance', 'moderate_general');
+	$permissionList['membergroup']['view_important'] = array(false, 'general', 'moderate_general');
+	$permissionList['membergroup']['mark_important'] = array(false, 'general', 'moderate_general');
 	if (!allowedTo('mark_important'))
 		$context['illegal_permissions'][] = 'mark_important';
+	if (!allowedTo('view_important'))
+		$context['illegal_permissions'][] = 'view_important';
 	$context['non_guest_permissions'][] = 'mark_important';
+	$context['non_guest_permissions'][] = 'view_important';
+}
+
+function ITM_settings(&$config_vars)
+{
+	global $txt;
+	$config_vars[] = array('select', 'itm_menu_home', array($txt['itm_menu_top_level']));
+}
+
+function ITM_Buffer($buffer)
+{
+	global $txt, $context, $modSettings;
+
+	// Are we dealing with the Modification Settings page?  If not, return buffer:
+	if (!isset($_GET['action']) || $_GET['action'] != 'admin' || !isset($_GET['area']) || $_GET['area'] != 'modsettings' || !isset($_GET['sa']) || $_GET['sa'] != 'general')
+		return $buffer;
+		
+	// Let's alter the buffer so that we see the "top menu" categories:
+	$part1 = substr($buffer, 0, $pos1 = strpos($buffer, 'name="itm_menu_home"'));
+	$part3 = substr($buffer, $pos1);
+	$part2 = substr($part3, 0, $pos3 = strpos($part3, '</option>') + 9);
+	$part3 = substr($part3, $pos3);
+	$part1 .= $part2;
+	$part2 = substr($part2, strpos($part2, '>') + 1);
+	$part2 = substr($part2, 0, strpos($part2, '<option'));
+	if (!($place = !empty($modSettings['itm_menu_home']) ? $modSettings['itm_menu_home'] : false))
+		$part1 = str_replace('<option value="0" selected="selected">', '<option value="0">', $part1);
+	foreach ($context['ITM_labels'] as $id => $label)
+	{
+		if ($id == 'login' || $id == 'register' || $id == 'logout')
+			continue;
+		$part1 .= $part2 . '<option value="' . $id . '"' . ($place == $id ? ' selected="selected"' : ''). '>' . $label . '</option>';
+	}
+	return $part1 . $part3;
 }
 
 /********************************************************************************
@@ -53,10 +103,10 @@ function ITM_Important_Topics()
 {
 	global $context, $txt, $scripturl, $modSettings, $smcFunc, $sourcedir;
 
-	// Set up for listing the "important" topics:
-	isAllowedTo('mark_important');
-	$context['page_title' ] = $txt['itm_important_topics'];
-	$context['sub_template'] = 'important_topics';
+	// If we can't mark topics as important, can we at least view the topic list?
+	$cannot_mark = !allowedTo('mark_important');
+	if ($cannot_mark)
+		isAllowedTo('view_important');
 
 	// Let's check the URL parameters passed before going further:
 	if (isset($_GET['sa']) && $_GET['sa'] == 'mark' && isset($_GET['topic']))
@@ -176,7 +226,7 @@ function ITM_Important_Topics()
 			),
 		),
 		'form' => array(
-			'href' => $scripturl . '?action=important;sa=remove;' . $context['session_var'] . '=' . $context['session_id'],
+			'href' => $scripturl . '?action=important' . (!$cannot_mark ? ';sa=remove;' : '') . $context['session_var'] . '=' . $context['session_id'],
 			'include_sort' => true,
 			'include_start' => true,
 		),
@@ -189,7 +239,13 @@ function ITM_Important_Topics()
 		),
 	);
 
+	// If we can't mark topics, then remove the ability from the form:
+	if ($cannot_mark)
+		unset($topic_listOptions['columns']['check'], $topic_listOptions['additional_rows']);
+
 	// Create the list.
+	$context['page_title' ] = $txt['itm_important_topics'];
+	$context['sub_template'] = 'important_topics';
 	require_once($sourcedir . '/Subs-List.php');
 	createList($topic_listOptions);
 }

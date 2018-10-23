@@ -4,7 +4,7 @@
 	<id>Dougiefresh:ImportantTopics</id>
 	<name>Our Important Topics</name>
 	<type>modification</type>
-	<version>1.1</version>
+	<version>1.2</version>
 
 	<install for="2.0 - 2.0.99, 2.1 Beta 2">
 		<readme type="file" parsebbc="true">readme.txt</readme>
