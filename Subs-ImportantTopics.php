@@ -200,9 +200,11 @@ function ITM_Topics_Count()
 {
 	global $smcFunc;
 	$request = $smcFunc['db_query']('', '
-		SELECT COUNT(important) AS count
-		FROM {db_prefix}topics
-		WHERE important = {int:marked_important}',
+		SELECT COUNT(t.important) AS count
+		FROM {db_prefix}topics AS t
+			LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
+		WHERE {query_see_board}
+			AND important = {int:marked_important}',
 		array(
 			'marked_important' => 1,
 		)
@@ -228,7 +230,8 @@ function ITM_Get_Topics($start, $items_per_page, $sort)
 			INNER JOIN {db_prefix}messages AS ml ON (ml.id_msg = t.id_last_msg)
 			LEFT JOIN {db_prefix}members AS memf ON (memf.id_member = mf.id_member)
 			LEFT JOIN {db_prefix}members AS meml ON (meml.id_member = ml.id_member)
-		WHERE t.important = {int:marked_important}
+		WHERE {query_see_board}
+			AND t.important = {int:marked_important}
 		ORDER BY {raw:sort}
 		LIMIT {int:start}, {int:per_page}',
 		array(

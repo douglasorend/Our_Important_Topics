@@ -1,2 +1,5 @@
+v1.0.1 - December 21st, 2016
+o Fixed bug where user can see topics made in boards that they don't have access to.
+
 v1.0 - December 16th, 2016
 o Initial release to the public
