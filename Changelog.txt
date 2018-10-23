@@ -1,3 +1,6 @@
+v1.8 - August 15th, 2018
+o Fixed 2 function definitions in [b]ITM_Important_Topics[/b] function, courtsey of [url=https://www.simplemachines.org/community/index.php?action=profile;u=112942]GL700Wing[/url].
+
 v1.7 - March 30th, 2018
 o Added Turkish translation, courtsey of [url=https://www.simplemachines.org/community/index.php?action=profile;u=373904]Snrj[/url]!
 

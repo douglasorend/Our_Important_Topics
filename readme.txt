@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]OUR IMPORTANT TOPICS v1.7[/b][/size][/color]
+[center][color=red][size=16pt][b]OUR IMPORTANT TOPICS v1.8[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=4133]Link to Mod[/url]
 [/center]
 [hr]
