@@ -278,8 +278,8 @@ function ITM_Get_Topics($start, $items_per_page, $sort)
 	$request = $smcFunc['db_query']('', '
 		SELECT
 			t.id_topic, t.num_replies, t.num_views, t.id_first_msg, b.id_board, b.name AS board_name,
-			mf.id_member AS first_member, IFNULL(meml.real_name, ml.poster_name) AS last_poster, 
-			ml.id_member AS last_member, IFNULL(memf.real_name, mf.poster_name) AS first_poster, 
+			mf.id_member AS first_member, COALESCE(meml.real_name, ml.poster_name) AS last_poster, 
+			ml.id_member AS last_member, COALESCE(memf.real_name, mf.poster_name) AS first_poster, 
 			mf.subject AS first_subject, mf.poster_time AS first_posted,
 			ml.subject AS last_subject, ml.poster_time AS last_posted
 		FROM {db_prefix}topics AS t

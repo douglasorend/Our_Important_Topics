@@ -1,3 +1,6 @@
+v1.5 - July 11th, 2017
+o Replaced IFNULL with COALESCE in database queries for better Postgres support.
+
 v1.4 - April 7th, 2017
 o Included Portuguese translation provided by [url=http://www.simplemachines.org/community/index.php?action=profile;u=98294]Portugal[/url].  Thanks, Portugal!
 
